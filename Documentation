@@ -1,4 +1,243 @@
-├── Database-Architecture.md
-│ ├── AI-Agent-Framework.md
-│ ├── Automation-Workflow.md
-│ └── KPI-Reporting.md
+# Database Architecture
+
+## AI Business Operations Platform (ABOP)
+
+## Overview
+
+The AI Business Operations Platform uses Airtable as the central operational database and single source of truth.
+
+The database architecture was designed using a relational model to connect customer information, sales activities, operational workflows, AI processing, and business intelligence reporting.
+
+---
+
+# System Data Model
+
+```
+                    Leads
+                      |
+                      |
+                      ↓
+
+              Opportunities
+                      |
+                      |
+          ---------------------
+          |                   |
+          ↓                   ↓
+
+       Clients              Tasks
+
+          |
+          |
+          ↓
+
+     Client Operations
+
+
+         
+
+AI Layer
+   |
+   ↓
+
+AI Agents → Insights → KPI Reporting
+```
+
+---
+
+# Core Tables
+
+## 1. Leads Table
+
+### Purpose
+
+Stores all incoming prospects and business opportunities.
+
+### Fields
+
+| Field             | Type          | Description                              |
+| ----------------- | ------------- | ---------------------------------------- |
+| Lead Name         | Text          | Contact person                           |
+| Company           | Text          | Business/company name                    |
+| Email             | Email         | Lead contact                             |
+| Phone             | Phone         | Contact number                           |
+| Lead Source       | Single Select | Website, Referral, LinkedIn, Facebook    |
+| Service Requested | Multi Select  | Requested service                        |
+| Status            | Single Select | New, Contacted, Qualified, Proposal Sent |
+| Qualification     | Single Select | Hot, Warm, Cold                          |
+| Urgency           | Single Select | Low, Medium, High, Emergency             |
+| AI Summary        | Long Text     | AI-generated lead analysis               |
+
+---
+
+# 2. Opportunities Table
+
+## Purpose
+
+Tracks sales pipeline and revenue forecasting.
+
+### Fields
+
+| Field               | Type          | Description                   |
+| ------------------- | ------------- | ----------------------------- |
+| Opportunity Name    | Text          | Deal name                     |
+| Deal Value          | Currency      | Estimated revenue             |
+| Sales Stage         | Single Select | Pipeline stage                |
+| Probability         | Percentage    | Closing likelihood            |
+| Expected Close Date | Date          | Forecast close date           |
+| AI Win Analysis     | Long Text     | AI-generated sales prediction |
+
+---
+
+# 3. Clients Table
+
+## Purpose
+
+Manages converted customers and customer success activities.
+
+### Fields
+
+| Field                 | Type          | Description                    |
+| --------------------- | ------------- | ------------------------------ |
+| Client Name           | Text          | Customer/company               |
+| Primary Contact       | Text          | Main contact                   |
+| Email                 | Email         | Client email                   |
+| Status                | Single Select | Active, Onboarding             |
+| Start Date            | Date          | Customer start date            |
+| Client Health Summary | Long Text     | AI-generated customer insights |
+
+---
+
+# 4. Tasks Table
+
+## Purpose
+
+Manages business workflows and operational activities.
+
+### Fields
+
+| Field             | Type          | Description                         |
+| ----------------- | ------------- | ----------------------------------- |
+| Task Name         | Text          | Activity name                       |
+| Description       | Long Text     | Task details                        |
+| Assigned Team     | Single Select | Responsible department              |
+| Priority          | Single Select | Low, Medium, High                   |
+| Due Date          | Date          | Deadline                            |
+| Status            | Single Select | Not Started, In Progress, Completed |
+| AI Recommendation | Long Text     | AI workflow suggestion              |
+
+---
+
+# 5. KPI Table
+
+## Purpose
+
+Tracks business performance and executive metrics.
+
+### Fields
+
+| Field            | Type          | Description              |
+| ---------------- | ------------- | ------------------------ |
+| KPI Name         | Text          | Metric name              |
+| Current Value    | Number        | Current performance      |
+| Target Value     | Number        | Business goal            |
+| Reporting Period | Single Select | Weekly, Monthly          |
+| Date Updated     | Date          | Last update              |
+| AI Insight       | Long Text     | Generated recommendation |
+
+---
+
+# Data Relationships
+
+## Leads → Opportunities
+
+A qualified lead can become a sales opportunity.
+
+Example:
+
+```
+New Lead
+   ↓
+Qualified Lead
+   ↓
+Opportunity Created
+```
+
+---
+
+## Opportunities → Clients
+
+A successful opportunity becomes a client.
+
+Example:
+
+```
+Closed Won Deal
+       ↓
+Client Account Created
+```
+
+---
+
+## Clients → Tasks
+
+Clients generate operational tasks.
+
+Example:
+
+```
+New Client
+    ↓
+Onboarding Tasks
+    ↓
+Service Delivery
+```
+
+---
+
+# AI Data Flow
+
+```
+Business Data
+      |
+      ↓
+Airtable Database
+      |
+      ↓
+AI Processing Layer
+      |
+      ↓
+Insights & Recommendations
+      |
+      ↓
+Dashboard Reporting
+```
+
+---
+
+# Architecture Benefits
+
+This structure provides:
+
+* Centralized business data
+* Scalable CRM management
+* Automated workflows
+* AI-powered decision support
+* Real-time operational visibility
+
+---
+
+## Technology
+
+Database Platform:
+Airtable
+
+Automation Layer:
+Zapier / APIs
+
+AI Layer:
+AI Agents and Prompt Workflows
+
+Reporting:
+Airtable Interfaces
+
